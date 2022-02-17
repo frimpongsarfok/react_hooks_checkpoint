@@ -8,20 +8,23 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+
+
 export default function ViewImage(props) {
     //set Properties and get item style details;
   const [open, setOpen] = React.useState(false);
   const [itemDetail,setItemDetail]=React.useState({});
   const handleClickOpen = () => {
-    console.log("item : ",props);
   
-     fetch(`http://52.26.193.201:3000/products/${props.id}/styles`)
-     .then(response=>response.json()).then(json=>setItemDetail(json));
      setOpen(true);
     
    
   };
-  
+React.useEffect(()=>{
+
+    fetch(`http://52.26.193.201:3000/products/${props.id}/styles`)
+    .then(response=>response.json()).then(json=>setItemDetail(json));
+})  
   const handleClose = () => {
       
     setOpen(false);
@@ -32,8 +35,9 @@ export default function ViewImage(props) {
       <Button variant="outlined" onClick={handleClickOpen}>
        View Details
       </Button>
-      <Dialog fullWidth={false} open={open} onClose={handleClose}>
+      <Dialog fullWidth={true} open={open} onClose={handleClose}>
         <DialogTitle>Price ${itemDetail.results?itemDetail.results[0].original_price:"$"}</DialogTitle>
+        
         <DialogContent>
           <DialogContentText></DialogContentText>
           <Box
@@ -52,7 +56,7 @@ export default function ViewImage(props) {
               image= {itemDetail.results?itemDetail.results[0].photos[0].url:""}
               alt={itemDetail.name}
             />
-            <Typography paragraph>{itemDetail.description}</Typography>
+            <Typography paragraph>{itemDetail.results?itemDetail.results[0].name:"No Description"}</Typography>
           </Box>
         </DialogContent>
         <DialogActions>
