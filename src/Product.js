@@ -31,7 +31,7 @@ export default function Product(props){
                     <p><em> {props.item.description}</em></p>
                     <p><i>Categor :</i>{props.item.category}</p>
                     <p><i>Price $ :</i><b>{props.item.default_price}</b></p> 
-                    <ViewImage  id={props.item.id}/>
+                    <ViewImage  id={props.item.id} name={props.item.name} />
                 </article>
                 
             }
